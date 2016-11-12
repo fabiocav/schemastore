@@ -1,0 +1,40 @@
+﻿{
+    "id": "testid",
+    "tracing": {
+        "consoleLevel": "info",
+        "fileLoggingMode": "never"
+    },
+    "watchDirectories": [
+        "test",
+        "test1"
+    ],
+    "functionTimeout": "00:05:00",
+    "singleton": {
+        "listenerLockPeriod": "00:01:00",
+        "listenerLockRecoveryPollingInterval": "00:01:00",
+        "lockAcquisitionPollingInterval": "00:00:30",
+        "lockAcquisitionTimeout": "00:00:30",
+        "lockPeriod": "00:00:15"
+    },
+    "eventHub": {
+        "maxBatchSize": 1000,
+        "prefetchCount": 100
+    },
+    "functions": [
+        "testfunction1",
+        "testfunction2"
+    ],
+    "http": {
+        "routePrefix": "api"
+    },
+    "queues": {
+        "batchSize": 16,
+        "maxDequeueCount": 5,
+        "maxPollingInterval": 60000,
+        "newBatchThreshold": 10
+    },
+    "serviceBus": {
+        "maxConcurrentCalls": 16,
+        "prefetchCount": 100
+    }
+}

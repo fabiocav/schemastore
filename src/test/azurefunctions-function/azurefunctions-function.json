@@ -1,0 +1,10 @@
+﻿{
+    "disabled": true,
+    "bindings": [
+        {
+            "type": "queueTrigger",
+            "name": "myQueue",
+            "direction": "in"
+        }
+    ]
+}
