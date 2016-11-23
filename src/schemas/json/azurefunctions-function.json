@@ -16,9 +16,9 @@
           "type": {
             "type": "string",
             "oneOf": [
-                {
-                    "$ref": "#/definitions/bindingNames"
-                },
+              {
+                "$ref": "#/definitions/bindingNames"
+              },
               {
                 "not": {
                   "$ref": "#/definitions/bindingNames"
@@ -48,6 +48,15 @@
                 "$ref": "#/definitions/httpTrigger"
               },
               {
+                "$ref": "#/definitions/eventHubTrigger"
+              },
+              {
+                "$ref": "#/definitions/blobTrigger"
+              },
+              {
+                "$ref": "#/definitions/manualTrigger"
+              },
+              {
                 "$ref": "#/definitions/dynamic"
               }
             ]
@@ -62,7 +71,65 @@
       "enum": [
         "timerTrigger",
         "queueTrigger",
-        "httpTrigger"
+        "httpTrigger",
+        "eventHubTrigger",
+        "manualTrigger",
+        "blobTrigger"
+      ]
+    },
+    "blobTrigger": {
+      "properties": {
+        "type": {
+          "type": "string",
+          "pattern": "blobTrigger"
+        },
+        "path": {
+          "type": "string",
+          "description": "The path to the blob contaiter"
+        }        
+      },
+      "allOf": [
+        {
+          "$ref": "#/definitions/trigger"
+        }
+      ]
+    },
+    "manualTrigger": {
+      "properties": {
+        "type": {
+          "type": "string",
+          "pattern": "manualTrigger"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/definitions/trigger"
+        }
+      ]
+    },
+    "eventHubTrigger": {
+      "properties": {
+        "type": {
+          "type": "string",
+          "pattern": "eventHubTrigger"
+        },
+        "path": {
+          "type": "string",
+          "description": "The event hub path."
+        },
+        "consumerGroup": {
+          "type": "string",
+          "description": "The event hub consumer group."
+        },
+        "connection": {
+          "type": "string",
+          "description": "The event hub connection string setting."
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/definitions/trigger"
+        }
       ]
     },
     "timerTrigger": {
@@ -72,10 +139,16 @@
           "pattern": "timerTrigger"
         },
         "schedule": {
-          "type": "string",
-          "description": "A CRON expression representing the timer schedule."
+            "type": "string",
+            "description": "A CRON expression representing the timer schedule.",
+            "pattern": "^(\\*|((([1-5]\\d)|\\d)(\\-(([1-5]\\d)|\\d)(\\/\\d+)?)?)(,((([1-5]\\d)|\\d)(\\-(([1-5]\\d)|\\d)(\\/\\d+)?)?))*)(\\/\\d+)? (\\*|((([1-5]\\d)|\\d)(\\-(([1-5]\\d)|\\d)(\\/\\d+)?)?)(,((([1-5]\\d)|\\d)(\\-(([1-5]\\d)|\\d)(\\/\\d+)?)?))*)(\\/\\d+)? (\\*|(((1\\d)|(2[0-3])|\\d)(\\-((1\\d)|(2[0-3])|\\d)(\\/\\d+)?)?)(,(((1\\d)|(2[0-3])|\\d)(\\-((1\\d)|(2[0-3])|\\d)(\\/\\d+)?)?))*)(\\/\\d+)? (\\*|((([1-2]\\d)|(3[0-1])|[1-9])(\\-(([1-2]\\d)|(3[0-1])|[1-9])(\\/\\d+)?)?)(,((([1-2]\\d)|(3[0-1])|[1-9])(\\-(([1-2]\\d)|(3[0-1])|[1-9])(\\/\\d+)?)?))*)(\\/\\d+)? (\\*|(([A-Za-z]+|(1[0-2])|[1-9])(\\-([A-Za-z]+|(1[0-2])|[1-9])(\\/\\d+)?)?)(,(([A-Za-z]+|(1[0-2])|[1-9])(\\-([A-Za-z]+|(1[0-2])|[1-9])(\\/\\d+)?)?))*)(\\/\\d+)? (\\*|(([A-Za-z]+|[0-6])(\\-([A-Za-z]+|[0-6])(\\/\\d+)?)?)(,(([A-Za-z]+|[0-6])(\\-([A-Za-z]+|[0-6])(\\/\\d+)?)?))*)(\\/\\d+)?$"
         }
-      }
+      },
+      "allOf": [
+        {
+          "$ref": "#/definitions/trigger"
+        }
+      ]
     },
     "queueTrigger": {
       "properties": {
@@ -88,6 +161,9 @@
           "description": "The queue name."
         }
       },
+      "required": [
+        "queueTrigger"
+      ],
       "allOf": [
         {
           "$ref": "#/definitions/trigger"
