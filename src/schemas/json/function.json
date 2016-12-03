@@ -51,6 +51,9 @@
                                 "$ref": "#/definitions/eventHubTrigger"
                             },
                             {
+                                "$ref": "#/definitions/serviceBusTrigger"
+                            },
+                            {
                                 "$ref": "#/definitions/blobTrigger"
                             },
                             {
@@ -74,7 +77,33 @@
                 "httpTrigger",
                 "eventHubTrigger",
                 "manualTrigger",
-                "blobTrigger"
+                "blobTrigger",
+                "serviceBusTrigger"
+            ]
+        },
+        "serviceBusTrigger": {
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "pattern": "serviceBusTrigger"
+                },
+                "queueName": {
+                    "type": "string",
+                    "description": "The service bus queue to monitor (if using a queue)"
+                },
+                "topicName": {
+                    "type": "string",
+                    "description": "The service bus topic to monitor (if using a queue)"
+                },
+                "subscriptionName": {
+                    "type": "string",
+                    "description": "The topic subscription name"
+                }
+            },
+            "allOf": [
+                {
+                    "$ref": "#/definitions/trigger"
+                }
             ]
         },
         "blobTrigger": {
@@ -180,6 +209,10 @@
                     "type": "string",
                     "description": "The function HTTP route template."
                 },
+                "webHookType": {
+                    "type": "string",
+                    "description": "The type of WebHook handled by the trigger (if handling a pre-defined WebHook)."
+                },
                 "authLevel": {
                     "type": "string",
                     "default": "function",
@@ -222,6 +255,26 @@
                     "type": "string",
                     "enum": [
                         "in"
+                    ]
+                }
+            }
+        },
+        "inputBinding": {
+            "properties": {
+                "direction": {
+                    "type": "string",
+                    "enum": [
+                        "in"
+                    ]
+                }
+            }
+        },
+        "outputBinding": {
+            "properties": {
+                "direction": {
+                    "type": "string",
+                    "enum": [
+                        "out"
                     ]
                 }
             }
